@@ -13,22 +13,22 @@ class PROCEDURALMESH_API AMyActor : public AActor
 	GENERATED_BODY()
 	
 private:
-	UPROPERTY(VisibleAnywhere)
-	UProceduralMeshComponent* mesh;
+	
 
 
 public:
 	// Sets default values for this actor's properties
 	AMyActor();
-
 	void PostActorCreated();
 
 protected:
 	void PostLoad();
 	void CreateTriangle();
-	void CreateSquare();
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleAnywhere)
+	UProceduralMeshComponent* mesh;
 
 public:	
 	// Called every frame
