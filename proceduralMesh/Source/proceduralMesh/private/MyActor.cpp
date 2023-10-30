@@ -29,7 +29,7 @@ void AMyActor::PostLoad()
 	//CreateSquare(100, 100, 2);
 	//CreateCube(100, 100);
 }
-
+/*
 void AMyActor::CreateTriangle()
 {
 	TArray<FVector> vertices;

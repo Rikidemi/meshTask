@@ -1,65 +1,59 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Square.h"
+#include "Triang.h"
 
-// Sets default values
-ASquare::ASquare()
+ATriang::ATriang()
 {
 	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("GeneratedMesh"));
 	RootComponent = mesh;
 	mesh->bUseAsyncCooking = true;
 }
 
-void ASquare::PostActorCreated ()
+
+// This is called when actor is spawned (at runtime or when you drop it into the world in editor)
+void ATriang::PostActorCreated()
 {
 	Super::PostActorCreated();
-	CreateSquare(100, 100, 1);
+	CreateTriangle();
 }
 
 // This is called when actor is already in level and map is opened
-void ASquare::PostLoad ()
+void ATriang::PostLoad()
 {
 	Super::PostLoad();
-	CreateSquare(100, 100, 1);
+	CreateTriangle();
 }
 
-void ASquare::CreateSquare(int length, int heigth, int norm) {
-
+void ATriang::CreateTriangle()
+{
 	TArray<FVector> vertices;
 	vertices.Add(FVector(0, 0, 0));
-	vertices.Add(FVector(0, length, 0));
-	vertices.Add(FVector(0, 0, heigth));
-	vertices.Add(FVector( 0, length ,heigth));
+	vertices.Add(FVector(0, 100, 0));
+	vertices.Add(FVector(0, 0, 100));
 
 	TArray<int32> Triangles;
 	Triangles.Add(0);
 	Triangles.Add(1);
 	Triangles.Add(2);
-	Triangles.Add(1);
-	Triangles.Add(3);
-	Triangles.Add(2);
 
 	TArray<FVector> normals;
-	normals.Add(FVector(norm, 0, 0));
-	normals.Add(FVector(norm, 0, 0));
-	normals.Add(FVector(norm, 0, 0));
-	normals.Add(FVector(norm, 0, 0));
+	normals.Add(FVector(1, 0, 0));
+	normals.Add(FVector(1, 0, 0));
+	normals.Add(FVector(1, 0, 0));
 
 	TArray<FVector2D> UV0;
 	UV0.Add(FVector2D(0, 0));
 	UV0.Add(FVector2D(10, 0));
 	UV0.Add(FVector2D(0, 10));
-	UV0.Add(FVector2D(10, 10));
+
 
 	TArray<FProcMeshTangent> tangents;
-	tangents.Add(FProcMeshTangent(0, norm, 0));
-	tangents.Add(FProcMeshTangent(0, norm, 0));
-	tangents.Add(FProcMeshTangent(0, norm, 0));
-	tangents.Add(FProcMeshTangent(0, norm, 0));
+	tangents.Add(FProcMeshTangent(0, 1, 0));
+	tangents.Add(FProcMeshTangent(0, 1, 0));
+	tangents.Add(FProcMeshTangent(0, 1, 0));
 
 	TArray<FLinearColor> vertexColors;
-	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
 	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
 	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
 	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
@@ -69,16 +63,15 @@ void ASquare::CreateSquare(int length, int heigth, int norm) {
 	// Enable collision data
 	mesh->ContainsPhysicsTriMeshData(true);
 }
-
 // Called when the game starts or when spawned
-void ASquare::BeginPlay()
+void ATriang::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void ASquare::Tick(float DeltaTime)
+void ATriang::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 

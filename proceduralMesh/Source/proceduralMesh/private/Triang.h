@@ -4,28 +4,27 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "ProceduralMeshComponent.h"
-#include "MyActor.generated.h"
+#include "MyActor.h"
+#include "Triang.generated.h"
 
 UCLASS()
-class PROCEDURALMESH_API AMyActor : public AActor
+class ATriang : public AMyActor
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	AMyActor();
-	void PostActorCreated();
+	ATriang();
 
 protected:
-	void PostLoad();
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	void PostActorCreated() override;
+	void PostLoad() override;
 
-	UPROPERTY(VisibleAnywhere)
-	UProceduralMeshComponent* mesh;
+	void CreateTriangle();
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 };
