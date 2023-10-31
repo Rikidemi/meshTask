@@ -7,6 +7,7 @@
 #include "ProceduralMeshComponent.h"
 #include "MyActor.generated.h"
 
+
 UCLASS()
 class PROCEDURALMESH_API AMyActor : public AActor
 {
@@ -14,13 +15,14 @@ class PROCEDURALMESH_API AMyActor : public AActor
 
 public:
 	// Sets default values for this actor's properties
-	AMyActor();
-	void PostActorCreated();
+	//AMyActor();
+	//void PostActorCreated();
 
 protected:
-	void PostLoad();
+	//void PostLoad();
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	void CreateSquare(TArray<FVector> vertices, int index);
 
 	UPROPERTY(VisibleAnywhere)
 	UProceduralMeshComponent* mesh;
