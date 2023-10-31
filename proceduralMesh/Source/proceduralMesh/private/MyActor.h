@@ -13,13 +13,7 @@ class PROCEDURALMESH_API AMyActor : public AActor
 {
 	GENERATED_BODY()
 
-public:
-	// Sets default values for this actor's properties
-	//AMyActor();
-	//void PostActorCreated();
-
 protected:
-	//void PostLoad();
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	void CreateSquare(TArray<FVector> vertices, int index);
