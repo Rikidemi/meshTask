@@ -2,7 +2,6 @@
 
 
 #include "Circle.h"
-#define T_PI 6.28318530718
 
 // Sets default values
 ACircle::ACircle()
@@ -15,33 +14,24 @@ ACircle::ACircle()
 void ACircle::PostActorCreated()
 {
 	Super::PostActorCreated();
-	CreateCircle(100,0);
+	CreateCircle(100,100,0);
 }
 
 void ACircle::PostLoad()
 {
 	Super::PostLoad();
-	CreateCircle(100, 0);
+	CreateCircle(100,100,0);
 }
 
-void ACircle::CreateCircle(const int radius, const int index)
+void ACircle::CreateCircle(const int radius, const int heigth, const int index)
 {
 	TArray<FVector> vertices;
 
 	int stepAroundCircle = 100;
-	int r = radius;
-	float angle = T_PI / stepAroundCircle;
-
-	for (int i = 0; i < stepAroundCircle; i++) 
-	{
-		vertices.Add(FVector(0, 0, 0));
-		vertices.Add(FVector(0, r * cos(angle*(i)), r * sin(angle*(i))));
-		vertices.Add(FVector(0, r * cos(angle * (i + 1)), r * sin(angle * (i + 1))));
-	}
+	GetCircleVertices(radius, heigth, stepAroundCircle, vertices);
 
 	TArray<int32> Triangles;
-
-	for (int i = 0; i < stepAroundCircle * 3; i++) 
+	for (int i = (stepAroundCircle * 3) -1; i >= 0; i--)
 	{
 		Triangles.Add(i);
 	}

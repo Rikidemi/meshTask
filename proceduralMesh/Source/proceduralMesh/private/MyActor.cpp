@@ -43,6 +43,18 @@ void AMyActor::CreateSquare(TArray<FVector> vert, int index) {
 	mesh->ContainsPhysicsTriMeshData(true);
 }
 
+void AMyActor::GetCircleVertices(const int r, const int heigth, const int stepAroundCircle, TArray<FVector>& vertices)
+{
+	float angle = T_PI / stepAroundCircle;
+	for (int i = 0; i < stepAroundCircle; i++)
+	{
+		vertices.Add(FVector(0, 0, heigth));
+		vertices.Add(FVector(r * cos(angle * (i)), r * sin(angle * (i)), heigth));
+		vertices.Add(FVector(r * cos(angle * (i + 1)), r * sin(angle * (i + 1)), heigth));
+	}
+}
+
+
 // Called when the game starts or when spawned
 void AMyActor::BeginPlay()
 {

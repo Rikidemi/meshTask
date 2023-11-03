@@ -5,23 +5,24 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "MyActor.h"
-#include "Circle.generated.h"
+#include "Cilinder.generated.h"
 
 UCLASS()
-class ACircle : public AMyActor
+class ACilinder : public AMyActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ACircle();
+	ACilinder();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	void PostActorCreated() override;
 	void PostLoad() override;
-	void CreateCircle(const int radius, const int heigth, const int index);
+
+	void CreateCilinder(const int radius, const int index);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
