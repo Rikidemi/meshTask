@@ -43,15 +43,31 @@ void AMyActor::CreateSquare(TArray<FVector> vert, int index) {
 	mesh->ContainsPhysicsTriMeshData(true);
 }
 
-void AMyActor::GetCircleVertices(const int r, const int heigth, const int stepAroundCircle, TArray<FVector>& vertices)
+void AMyActor::GetCircleVertices(const int r, const int heigth, TArray<FVector>& vertices, FVector centre, int direction, FRotator rotator)
 {
+	FTransform T(rotator, centre, FVector(1, 1, 1));
+	//FRotationTranslationMatrix M(FRotator(0, 0, 90), centre);
+	//int variation = 50;
+	//int direction = 1;
 	float angle = T_PI / stepAroundCircle;
-	for (int i = 0; i < stepAroundCircle; i++)
-	{
-		vertices.Add(FVector(0, 0, heigth));
-		vertices.Add(FVector(r * cos(angle * (i)), r * sin(angle * (i)), heigth));
-		vertices.Add(FVector(r * cos(angle * (i + 1)), r * sin(angle * (i + 1)), heigth));
+
+	if (direction == 0) {
+		for (int i = 0; i < stepAroundCircle; i++)
+		{
+			vertices.Add(T.TransformVector(FVector(centre.X, centre.Y, centre.Z + heigth)));
+			vertices.Add(T.TransformVector(FVector(centre.X+(r * cos(angle * (i))), centre.Y+(r * sin(angle * (i))), centre.Z + heigth)));
+			vertices.Add(T.TransformVector(FVector(centre.X + (r * cos(angle * (i + 1))), centre.Y+(r * sin(angle * (i + 1))), centre.Z + heigth)));
+		}
 	}
+	else {
+		for (int i = 0; i < stepAroundCircle; i++)
+		{
+			vertices.Add(T.TransformVector(FVector(centre.X, centre.Y, centre.Z)));
+			vertices.Add(T.TransformVector(FVector(centre.X, centre.Y+(r * cos(angle * (i))), centre.Z+(r * sin(angle * (i))))));
+			vertices.Add(T.TransformVector(FVector(centre.X, centre.Y+(r * cos(angle * (i + 1))), centre.Z + (r * sin(angle * (i + 1))))));
+		}
+	}
+	
 }
 
 

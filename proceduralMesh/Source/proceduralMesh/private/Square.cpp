@@ -11,13 +11,18 @@ ASquare::ASquare()
 	mesh->bUseAsyncCooking = true;
 	
 	vertices.Add(FVector(0, 0, 0));
-	vertices.Add(FVector(0, 100, 0));
-	vertices.Add(FVector(0, 0, 100));
-	vertices.Add(FVector(0, 100, 100));
+	vertices.Add(FVector(0, size, 0));
+	vertices.Add(FVector(0, 0, size));
+	vertices.Add(FVector(0, size, size));
 }
 
 void ASquare::PostActorCreated ()
 {
+	vertices.Empty();
+	vertices.Add(FVector(0, 0, 0));
+	vertices.Add(FVector(0, size, 0));
+	vertices.Add(FVector(0, 0, size));
+	vertices.Add(FVector(0, size, size));
 	Super::PostActorCreated();
 	CreateSquare(vertices,0);
 }
@@ -25,6 +30,11 @@ void ASquare::PostActorCreated ()
 // This is called when actor is already in level and map is opened
 void ASquare::PostLoad ()
 {
+	vertices.Empty();
+	vertices.Add(FVector(0, 0, 0));
+	vertices.Add(FVector(0, size, 0));
+	vertices.Add(FVector(0, 0, size));
+	vertices.Add(FVector(0, size, size));
 	Super::PostLoad();
 	CreateSquare(vertices,0);
 }

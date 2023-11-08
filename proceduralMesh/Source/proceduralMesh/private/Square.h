@@ -14,6 +14,8 @@ class ASquare : public AMyActor
 private:
 	//int length;
 	TArray<FVector> vertices;
+
+	
 public:	
 	// Sets default values for this actor's properties
 	ASquare();
@@ -23,6 +25,7 @@ protected:
 	virtual void BeginPlay() override;
 	void PostActorCreated() override;
 	void PostLoad() override;
+
 
 public:	
 	// Called every frame

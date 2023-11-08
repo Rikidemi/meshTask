@@ -27,15 +27,19 @@ void ACircle::CreateCircle(const int radius, const int heigth, const int index)
 {
 	TArray<FVector> vertices;
 
-	int stepAroundCircle = 100;
-	GetCircleVertices(radius, heigth, stepAroundCircle, vertices);
-
+	GetCircleVertices(radius, heigth, vertices, FVector(0,0,0), 1, FRotator(0,0,0));
+	/*
 	TArray<int32> Triangles;
 	for (int i = (stepAroundCircle * 3) -1; i >= 0; i--)
 	{
 		Triangles.Add(i);
-	}
+	}*/
 
+	TArray<int32> Triangles;
+	for (int i = 0; i < stepAroundCircle * 3; i++)
+	{
+		Triangles.Add(i);
+	}
 	TArray<FVector> normals;
 	normals.Add(FVector(1, 0, 0));
 	normals.Add(FVector(1, 0, 0));

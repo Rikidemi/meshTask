@@ -29,12 +29,11 @@ void ACilinder::CreateCilinder(const int radius, const int index)
 	//TArray<FVector> Svertices;
 
 	int heigth = 100;
-	int stepAroundCircle = 8;
 	int r = radius;
 	float angle = T_PI / stepAroundCircle;
 
-	GetCircleVertices(radius, 0, stepAroundCircle, BottomVertices);
-	GetCircleVertices(radius, heigth, stepAroundCircle, TopVertices);
+	GetCircleVertices(radius, 0, BottomVertices, FVector(0,0,0), 0, FRotator(0,0,0));
+	GetCircleVertices(radius, heigth, TopVertices, FVector(0, 0, 0),0, FRotator(0, 0, 0));
 	
 	int j;
 	for (int i = 1; i < stepAroundCircle * 3; i++) {

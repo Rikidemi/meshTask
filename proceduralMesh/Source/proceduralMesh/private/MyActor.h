@@ -18,10 +18,15 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	void CreateSquare(TArray<FVector> vertices, int index);
-	void GetCircleVertices(const int radius, const int heigth, const int stepAroundCircle, TArray<FVector>& vertices);
+	void GetCircleVertices(const int radius, const int heigth, TArray<FVector>& vertices, FVector centre, int direction, FRotator rotator);
 
 	UPROPERTY(VisibleAnywhere)
 	UProceduralMeshComponent* mesh;
+
+	int stepAroundCircle = 8;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Custom)
+	int size = 100;
 
 public:	
 	// Called every frame
