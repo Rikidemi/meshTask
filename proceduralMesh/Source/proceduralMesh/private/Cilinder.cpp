@@ -14,13 +14,18 @@ ACilinder::ACilinder()
 void ACilinder::PostActorCreated()
 {
 	Super::PostActorCreated();
-	CreateCilinder(100, 0);
+	CreateCilinder(size, 0);
 }
 
 void ACilinder::PostLoad()
 {
 	Super::PostLoad();
-	CreateCilinder(100, 0);
+	CreateCilinder(size, 0);
+}
+void ACilinder::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+	CreateCilinder(size, 0);
 }
 void ACilinder::CreateCilinder(const int radius, const int index)
 {
@@ -28,7 +33,6 @@ void ACilinder::CreateCilinder(const int radius, const int index)
 	TArray<FVector> TopVertices;
 	//TArray<FVector> Svertices;
 
-	int heigth = 100;
 	int r = radius;
 	float angle = T_PI / stepAroundCircle;
 

@@ -21,8 +21,9 @@ protected:
 	virtual void BeginPlay() override;
 	void PostActorCreated() override;
 	void PostLoad() override;
+	void OnConstruction(const FTransform& Transform);
 
-	void CreateTorus(const int radius, const int index);
+	void CreateTorus(const int index);
 
 public:	
 	// Called every frame

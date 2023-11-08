@@ -14,17 +14,24 @@ ATorus::ATorus()
 void ATorus::PostActorCreated()
 {
 	Super::PostActorCreated();
-	CreateTorus(100, 0);
+	CreateTorus(0);
 }
 
 void ATorus::PostLoad()
 {
 	Super::PostLoad();
-	CreateTorus(100, 0);
+	CreateTorus(0);
 }
 
-void ATorus::CreateTorus(const int radius, const int index)
+void ATorus::OnConstruction(const FTransform& Transform)
 {
+	Super::OnConstruction(Transform);
+	CreateTorus(0);
+}
+
+void ATorus::CreateTorus(const int index)
+{
+	int radius = size;
 	TArray<FVector> MidVertices;
 	TArray<TArray<FVector>> TorusVertices;
 	int meshIndex = index;

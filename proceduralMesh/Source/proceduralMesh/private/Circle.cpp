@@ -14,17 +14,24 @@ ACircle::ACircle()
 void ACircle::PostActorCreated()
 {
 	Super::PostActorCreated();
-	CreateCircle(100,100,0);
+	CreateCircle(100,0);
 }
 
 void ACircle::PostLoad()
 {
 	Super::PostLoad();
-	CreateCircle(100,100,0);
+	CreateCircle(100,0);
 }
 
-void ACircle::CreateCircle(const int radius, const int heigth, const int index)
+void ACircle::OnConstruction(const FTransform& Transform)
 {
+	Super::OnConstruction(Transform);
+	CreateCircle(100, 0);
+}
+
+void ACircle::CreateCircle(const int heigth, const int index)
+{
+	int radius = size;
 	TArray<FVector> vertices;
 
 	GetCircleVertices(radius, heigth, vertices, FVector(0,0,0), 1, FRotator(0,0,0));

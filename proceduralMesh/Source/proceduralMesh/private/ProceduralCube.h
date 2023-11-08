@@ -21,8 +21,8 @@ protected:
 	virtual void BeginPlay() override;
 	void PostActorCreated() override;
 	void PostLoad() override;
-
-	void CreateCube(const int);
+	void OnConstruction(const FTransform& Transform);
+	void CreateCube();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

@@ -17,17 +17,24 @@ ACube::ACube()
 void ACube::PostActorCreated()
 {
 	Super::PostActorCreated();
-	CreateCube(100);
+	CreateCube();
 }
 
 void ACube::PostLoad()
 {
 	Super::PostLoad();
-	CreateCube(100);
+	CreateCube();
 }
 
-void ACube::CreateCube(const int l)
+void ACube::OnConstruction(const FTransform& Transform)
 {
+	Super::OnConstruction(Transform);
+	CreateCube();
+}
+
+void ACube::CreateCube()
+{
+	int l = size;
 	TArray<FVector> vert;
 
 	FVector a(l, 0, 0);

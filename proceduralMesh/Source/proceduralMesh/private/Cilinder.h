@@ -21,8 +21,11 @@ protected:
 	virtual void BeginPlay() override;
 	void PostActorCreated() override;
 	void PostLoad() override;
-
+	void OnConstruction(const FTransform& Transform);
 	void CreateCilinder(const int radius, const int index);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int heigth = 100;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

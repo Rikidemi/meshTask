@@ -21,7 +21,8 @@ protected:
 	virtual void BeginPlay() override;
 	void PostActorCreated() override;
 	void PostLoad() override;
-	void CreateCircle(const int radius, const int heigth, const int index);
+	void OnConstruction(const FTransform& Transform);
+	void CreateCircle(const int heigth, const int index);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

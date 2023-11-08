@@ -25,7 +25,7 @@ protected:
 	virtual void BeginPlay() override;
 	void PostActorCreated() override;
 	void PostLoad() override;
-
+	void OnConstruction(const FTransform& Transform);
 
 public:	
 	// Called every frame

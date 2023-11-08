@@ -25,9 +25,9 @@ protected:
 
 	int stepAroundCircle = 8;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Custom)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int size = 100;
-
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

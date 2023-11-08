@@ -39,6 +39,17 @@ void ASquare::PostLoad ()
 	CreateSquare(vertices,0);
 }
 
+void ASquare::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+	vertices.Empty();
+	vertices.Add(FVector(0, 0, 0));
+	vertices.Add(FVector(0, size, 0));
+	vertices.Add(FVector(0, 0, size));
+	vertices.Add(FVector(0, size, size));
+	CreateSquare(vertices, 0);
+}
+
 // Called when the game starts or when spawned
 void ASquare::BeginPlay()
 {
