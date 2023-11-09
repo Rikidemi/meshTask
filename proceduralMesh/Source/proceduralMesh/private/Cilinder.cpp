@@ -14,21 +14,22 @@ ACilinder::ACilinder()
 void ACilinder::PostActorCreated()
 {
 	Super::PostActorCreated();
-	CreateCilinder(size, 0);
+	CreateCilinder(0);
 }
 
 void ACilinder::PostLoad()
 {
 	Super::PostLoad();
-	CreateCilinder(size, 0);
+	CreateCilinder(0);
 }
 void ACilinder::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
-	CreateCilinder(size, 0);
+	CreateCilinder(0);
 }
-void ACilinder::CreateCilinder(const int radius, const int index)
+void ACilinder::CreateCilinder(const int index)
 {
+	int radius = size;
 	TArray<FVector> BottomVertices;
 	TArray<FVector> TopVertices;
 	//TArray<FVector> Svertices;

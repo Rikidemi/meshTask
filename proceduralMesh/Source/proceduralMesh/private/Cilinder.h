@@ -22,7 +22,7 @@ protected:
 	void PostActorCreated() override;
 	void PostLoad() override;
 	void OnConstruction(const FTransform& Transform);
-	void CreateCilinder(const int radius, const int index);
+	void CreateCilinder(const int index);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int heigth = 100;

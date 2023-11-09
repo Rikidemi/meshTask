@@ -46,9 +46,6 @@ void AMyActor::CreateSquare(TArray<FVector> vert, int index) {
 void AMyActor::GetCircleVertices(const int r, const int heigth, TArray<FVector>& vertices, FVector centre, int direction, FRotator rotator)
 {
 	FTransform T(rotator, centre, FVector(1, 1, 1));
-	//FRotationTranslationMatrix M(FRotator(0, 0, 90), centre);
-	//int variation = 50;
-	//int direction = 1;
 	float angle = T_PI / stepAroundCircle;
 
 	if (direction == 0) {

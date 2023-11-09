@@ -35,12 +35,6 @@ void ACircle::CreateCircle(const int heigth, const int index)
 	TArray<FVector> vertices;
 
 	GetCircleVertices(radius, heigth, vertices, FVector(0,0,0), 1, FRotator(0,0,0));
-	/*
-	TArray<int32> Triangles;
-	for (int i = (stepAroundCircle * 3) -1; i >= 0; i--)
-	{
-		Triangles.Add(i);
-	}*/
 
 	TArray<int32> Triangles;
 	for (int i = 0; i < stepAroundCircle * 3; i++)
