@@ -15,10 +15,10 @@ void AMyActor::CreateSquare(TArray<FVector> vert, int index) {
 	Triangles.Add(2);
 
 	TArray<FVector> normals;
-	normals.Add(FVector(1, 0, 0));
-	normals.Add(FVector(1, 0, 0));
-	normals.Add(FVector(1, 0, 0));
-	normals.Add(FVector(1, 0, 0));
+	normals.Add(FVector(0, 0, 1));
+	normals.Add(FVector(0, 0, 1));
+	normals.Add(FVector(0, 0, 1));
+	normals.Add(FVector(0, 0, 1));
 
 	TArray<FVector2D> UV0;
 	UV0.Add(FVector2D(0, 0));

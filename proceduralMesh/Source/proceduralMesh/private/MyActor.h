@@ -23,7 +23,7 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UProceduralMeshComponent* mesh;
 
-	int stepAroundCircle = 8;
+	const int stepAroundCircle = 8;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int size = 100;
