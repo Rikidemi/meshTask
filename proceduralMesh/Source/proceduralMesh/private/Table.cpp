@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "chair.h"
+#include "Table.h"
 
 // Sets default values
-Achair::Achair()
+ATable::ATable()
 {
 	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("ChairMesh"));
 	RootComponent = mesh;
@@ -12,31 +12,30 @@ Achair::Achair()
 }
 
 // Called when the game starts or when spawned
-void Achair::BeginPlay()
+void ATable::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
-void Achair::PostActorCreated()
+void ATable::PostActorCreated()
 {
 	Super::PostActorCreated();
-	CreateChair();
+	CreateTable();
 }
 
-
-void Achair::PostLoad()
+void ATable::PostLoad()
 {
 	Super::PostLoad();
-	CreateChair();
+	CreateTable();
 }
 
-void Achair::OnConstruction(const FTransform& Transform)
+void ATable::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
-	CreateChair();
+	CreateTable();
 }
 
-void Achair::CreateChair()
+void ATable::CreateTable()
 {
 	int index = 0;
 	int border = (size * 20) / 100;
@@ -44,33 +43,24 @@ void Achair::CreateChair()
 
 	GetBoxVertices(vertices, size, border, FVector(0, 0, legLength));
 	CreateBox(vertices, mesh, index);
-	
-	
+
 	TArray<FVector> backVertices, auxVert;
 
-	//GetBoxVertices(aux, size, border, FVector(500,500,500));
-	GetBoxVertices(backVertices, size, border, FVector(legLength, 0, 0));
-	FTransform T(FRotator(90,0,0), FVector(0, 0, 0), FVector(1, 1, 1));
-	for (auto v : backVertices) {
-		auxVert.Add(T.TransformVector(v));
-	}
-	
-	CreateBox(auxVert, mesh, ++index);
-	CreateCilinder(border / 2, legLength / 2, mesh, FVector(0, border, 0), ++index);
+	CreateCilinder(border / 2, legLength / 2, mesh, FVector(border, border, 0), ++index);
 
 	FTransform F(FVector((size * 2) - border, 0, 0));
-	CreateCilinder(border / 2, legLength / 2, mesh, F.TransformPosition(FVector(0, border, 0)),++index);
-	
+	CreateCilinder(border / 2, legLength / 2, mesh, F.TransformPosition(FVector(0, border, 0)), ++index);
+
 	F.SetTranslation(FVector((size * 2) - border, (size * 2) - 2 * border, 0));
 	CreateCilinder(border / 2, legLength / 2, mesh, F.TransformPosition(FVector(0, border, 0)), ++index);
 
-	F.SetTranslation(FVector(0, (size * 2) - 2 * border, 0));
+	F.SetTranslation(FVector(border, (size * 2) - 2 * border, 0));
 	CreateCilinder(border / 2, legLength / 2, mesh, F.TransformPosition(FVector(0, border, 0)), ++index);
 
-	}
+}
 
 // Called every frame
-void Achair::Tick(float DeltaTime)
+void ATable::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }

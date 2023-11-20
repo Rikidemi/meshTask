@@ -109,6 +109,7 @@ void CreateCircle(TArray<FVector> vertices, UProceduralMeshComponent*& mesh, int
 
 void GetBoxVertices(TArray<FVector>& vertices, int l, int h, FVector centre)
 {
+	vertices.Empty();
 	//FVector centre(100, 100, 100);
 	FTransform T(FRotator(0), FVector(centre.X/2, centre.Y/2, centre.Z/2), FVector(1, 1, 1));
 
