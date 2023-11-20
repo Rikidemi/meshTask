@@ -6,49 +6,34 @@
 // Sets default values
 ASquare::ASquare()
 {
-	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("GeneratedMesh"));
+	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("SquareMesh"));
 	RootComponent = mesh;
 	mesh->bUseAsyncCooking = true;
-	
-	vertices.Add(FVector(0, 0, 0));
-	vertices.Add(FVector(0, size, 0));
-	vertices.Add(FVector(0, 0, size));
-	vertices.Add(FVector(0, size, size));
 }
 
 void ASquare::PostActorCreated ()
 {
-	vertices.Empty();
-	vertices.Add(FVector(0, 0, 0));
-	vertices.Add(FVector(0, size, 0));
-	vertices.Add(FVector(0, 0, size));
-	vertices.Add(FVector(0, size, size));
 	Super::PostActorCreated();
-	CreateSquare(vertices,0);
+	GetSquareVertices(vertices, FVector(0, 0, 0), FTransform(), size);
+	CreateSquare(vertices, mesh, 0);
 }
 
 // This is called when actor is already in level and map is opened
 void ASquare::PostLoad ()
 {
-	vertices.Empty();
-	vertices.Add(FVector(0, 0, 0));
-	vertices.Add(FVector(0, size, 0));
-	vertices.Add(FVector(0, 0, size));
-	vertices.Add(FVector(0, size, size));
 	Super::PostLoad();
-	CreateSquare(vertices,0);
+	GetSquareVertices(vertices, FVector(0, 0, 0), FTransform(), size);
+	CreateSquare(vertices, mesh, 0);
 }
 
 void ASquare::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
-	vertices.Empty();
-	vertices.Add(FVector(0, 0, 0));
-	vertices.Add(FVector(0, size, 0));
-	vertices.Add(FVector(0, 0, size));
-	vertices.Add(FVector(0, size, size));
-	CreateSquare(vertices, 0);
+	GetSquareVertices(vertices, FVector(0, 0, 0), FTransform(), size);
+	CreateSquare(vertices, mesh, 0);
 }
+
+
 
 // Called when the game starts or when spawned
 void ASquare::BeginPlay()

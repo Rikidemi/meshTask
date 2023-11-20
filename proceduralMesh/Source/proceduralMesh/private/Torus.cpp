@@ -6,7 +6,7 @@
 // Sets default values
 ATorus::ATorus()
 {
-	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("GeneratedMesh"));
+	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("TorusMesh"));
 	RootComponent = mesh;
 	mesh->bUseAsyncCooking = true;
 }
@@ -37,19 +37,15 @@ void ATorus::CreateTorus(const int index)
 	int meshIndex = index;
 
 	TArray<FVector> CleanVertices;
-	GetCircleVertices(radius, 0, MidVertices, FVector(0, 0, 0), 0, FRotator(0,0,0));
+	GetCircleVertices(radius, 0, MidVertices, FVector(0, 0, 0),FTransform());
 	
 	for (int i = 0; i < stepAroundCircle; i++) {
 		TArray<FVector> AuxVertices;
 		float angle = 360 / stepAroundCircle;
+		//to be fixed FRotator(0, i * angle, 0)
 		
-		GetCircleVertices(radius - ((radius*10)/100), 100, AuxVertices, MidVertices[2], 1, FRotator(0, i * angle, 0));
+		GetCircleVertices(radius - ((radius*10)/100), 100, AuxVertices, MidVertices[2], FTransform(FRotator(90, i * angle, 0),FVector(0,0,0), FVector(1,1,1)));
 		
-		TArray<int32> Triangles;
-		for (int j = 0; j < stepAroundCircle * 3; j++)
-		{
-			Triangles.Add(j);
-		}
 		TArray<FVector> CleanVerticesAux;
 		for (FVector v : AuxVertices) {
 			if (!CleanVertices.Contains(v)) {
@@ -72,13 +68,14 @@ void ATorus::CreateTorus(const int index)
 				j = 0;
 			}
 			TArray<FVector> SupVertices;
-
-			SupVertices.Add(TorusVertices[z][i]);
 			SupVertices.Add(TorusVertices[z][j]);
-			SupVertices.Add(TorusVertices[y][i]);
+			SupVertices.Add(TorusVertices[z][i]);
 			SupVertices.Add(TorusVertices[y][j]);
+			SupVertices.Add(TorusVertices[y][i]);
+			
 
-			CreateSquare(SupVertices, meshIndex++);
+			CreateSquare(SupVertices, mesh, meshIndex++);
+			SupVertices.Empty();
 		}
 	}
 }

@@ -5,33 +5,36 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "MyActor.h"
-#include "Square.generated.h"
+#include "chair.generated.h"
 
 UCLASS()
-class PROCEDURALMESH_API ASquare : public AActor
+class PROCEDURALMESH_API Achair : public AActor
 {
 	GENERATED_BODY()
 private:
-	//int length;
+
 	TArray<FVector> vertices;
 
 public:	
 	// Sets default values for this actor's properties
-	ASquare();
+	Achair();
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay();
-	void PostActorCreated();
-	void PostLoad();
+	virtual void BeginPlay() ;
+	void PostActorCreated() ;
+	void PostLoad() ;
 	void OnConstruction(const FTransform& Transform);
+	void CreateChair();
 
 	UPROPERTY(VisibleAnywhere)
 	UProceduralMeshComponent* mesh;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int size = 100;
+
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime);
+	virtual void Tick(float DeltaTime) ;
 
 };

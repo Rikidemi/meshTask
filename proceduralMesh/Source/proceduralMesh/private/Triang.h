@@ -8,7 +8,7 @@
 #include "Triang.generated.h"
 
 UCLASS()
-class ATriang : public AMyActor
+class PROCEDURALMESH_API ATriang : public AActor
 {
 	GENERATED_BODY()
 
@@ -18,13 +18,17 @@ public:
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	void PostActorCreated() override;
-	void PostLoad() override;
+	virtual void BeginPlay();
+	void PostActorCreated();
+	void PostLoad();
 
 	void CreateTriangle();
 
+	UPROPERTY(VisibleAnywhere)
+	UProceduralMeshComponent* mesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int size = 100;
 public:
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaTime);
 };

@@ -6,69 +6,37 @@
 // Sets default values
 ACircle::ACircle()
 {
-	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("GeneratedMesh"));
+	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("CircleMesh"));
 	RootComponent = mesh;
 	mesh->bUseAsyncCooking = true;
 }
 
 void ACircle::PostActorCreated()
 {
+	int index = 0;
 	Super::PostActorCreated();
-	CreateCircle(100,0);
+
+	GetCircleVertices(size, 100, vertices, FVector(0, 0, 0), FTransform(FRotator(90, 0, 0), FVector(0, 0, 100), FVector(1, 1, 1)));
+	CreateCircle(vertices, mesh, index);
 }
 
 void ACircle::PostLoad()
 {
+	int index = 0;
 	Super::PostLoad();
-	CreateCircle(100,0);
+
+	GetCircleVertices(size, 100, vertices, FVector(0, 0, 0), FTransform(FRotator(90, 0, 0), FVector(0, 0, 100), FVector(1, 1, 1)));
+	CreateCircle(vertices, mesh, index);
 }
 
 void ACircle::OnConstruction(const FTransform& Transform)
 {
+	int index = 0;
 	Super::OnConstruction(Transform);
-	CreateCircle(100, 0);
+
+	GetCircleVertices(size, 100, vertices, FVector(0, 0, 0), FTransform(FRotator(90, 0, 0), FVector(0, 0, 100), FVector(1, 1, 1)));
+	CreateCircle(vertices, mesh, index);
 }
-
-void ACircle::CreateCircle(const int heigth, const int index)
-{
-	int radius = size;
-	TArray<FVector> vertices;
-
-	GetCircleVertices(radius, heigth, vertices, FVector(0,0,0), 1, FRotator(0,0,0));
-
-	TArray<int32> Triangles;
-	for (int i = 0; i < stepAroundCircle * 3; i++)
-	{
-		Triangles.Add(i);
-	}
-	TArray<FVector> normals;
-	normals.Add(FVector(1, 0, 0));
-	normals.Add(FVector(1, 0, 0));
-	normals.Add(FVector(1, 0, 0));
-	normals.Add(FVector(1, 0, 0));
-
-	TArray<FVector2D> UV0;
-	UV0.Add(FVector2D(0, 0));
-	UV0.Add(FVector2D(10, 0));
-	UV0.Add(FVector2D(0, 10));
-	UV0.Add(FVector2D(10, 10));
-
-	TArray<FProcMeshTangent> tangents;
-	tangents.Add(FProcMeshTangent(0, 1, 0));
-	tangents.Add(FProcMeshTangent(0, 1, 0));
-	tangents.Add(FProcMeshTangent(0, 1, 0));
-	tangents.Add(FProcMeshTangent(0, 1, 0));
-
-	TArray<FLinearColor> vertexColors;
-	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
-	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
-	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
-	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
-
-	mesh->CreateMeshSection_LinearColor(index, vertices, Triangles, normals, UV0, vertexColors, tangents, true);
-	// Enable collision data
-	mesh->ContainsPhysicsTriMeshData(true);
-};
 
 // Called when the game starts or when spawned
 void ACircle::BeginPlay()

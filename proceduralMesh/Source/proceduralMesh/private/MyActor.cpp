@@ -4,8 +4,26 @@
 #include "MyActor.h"
 
 
-void AMyActor::CreateSquare(TArray<FVector> vert, int index) {
+void GetSquareVertices(TArray<FVector>& vertices,FVector centre , FTransform T, int size)
+{
+	vertices.Empty();
+	/*
+	//FTransform T(rotator, FVector(0, 0, 0), FVector(1, 1, 1));
+	vertices.Add(T.TransformVector(centre));
+	vertices.Add(T.TransformVector(FVector(centre.X, centre.Y + size, centre.Z)));
+	vertices.Add(T.TransformVector(FVector(centre.X, centre.Y, centre.Z+size)));
+	vertices.Add(T.TransformVector(FVector(0, centre.Y+size, centre.Z+size)));
+	*/
+
+	vertices.Add(T.TransformVector(FVector(centre.X + size, 0, centre.Z - size)));
+	vertices.Add(T.TransformVector(FVector(centre.X - size, 0, centre.Z - size)));
 	
+	vertices.Add(T.TransformVector(FVector(centre.X + size, 0, centre.Z + size)));
+	vertices.Add(T.TransformVector(FVector(centre.X - size, 0, centre.Z + size)));
+}
+
+void CreateSquare(TArray<FVector>& vertices, UProceduralMeshComponent*& mesh, int index) {
+
 	TArray<int32> Triangles;
 	Triangles.Add(0);
 	Triangles.Add(1);
@@ -38,47 +56,227 @@ void AMyActor::CreateSquare(TArray<FVector> vert, int index) {
 	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
 	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
 
-	mesh->CreateMeshSection_LinearColor(index, vert, Triangles, normals, UV0, vertexColors, tangents, true);	
+	mesh->CreateMeshSection_LinearColor(index, vertices, Triangles, normals, UV0, vertexColors, tangents, true);
 	// Enable collision data
 	mesh->ContainsPhysicsTriMeshData(true);
 }
 
-void AMyActor::GetCircleVertices(const int r, const int heigth, TArray<FVector>& vertices, FVector centre, int direction, FRotator rotator)
+
+void GetCircleVertices(const int radius, const int heigth, TArray<FVector>& vertices, FVector centre, FTransform T)
 {
-	FTransform T(rotator, centre, FVector(1, 1, 1));
+	float angle = T_PI / stepAroundCircle;
+	for (int i = 0; i < stepAroundCircle; i++)
+	{
+		vertices.Add(T.TransformVector(FVector(centre.X, centre.Y, centre.Z + heigth)));
+		vertices.Add(T.TransformVector(FVector(centre.X + (radius * cos(angle * (i))), centre.Y + (radius * sin(angle * (i))), centre.Z + heigth)));
+		vertices.Add(T.TransformVector(FVector(centre.X + (radius * cos(angle * (i + 1))), centre.Y + (radius * sin(angle * (i + 1))), centre.Z + heigth)));
+	}
+}
+void CreateCircle(TArray<FVector> vertices, UProceduralMeshComponent*& mesh, int& index) {
+	
+	TArray<int32> Triangles;
+	for (int i = 0; i < stepAroundCircle * 3; i++)
+	{
+		Triangles.Add(i);
+	}
+	TArray<FVector> normals;
+	normals.Add(FVector(1, 0, 0));
+	normals.Add(FVector(1, 0, 0));
+	normals.Add(FVector(1, 0, 0));
+	normals.Add(FVector(1, 0, 0));
+
+	TArray<FVector2D> UV0;
+	UV0.Add(FVector2D(0, 0));
+	UV0.Add(FVector2D(10, 0));
+	UV0.Add(FVector2D(0, 10));
+	UV0.Add(FVector2D(10, 10));
+
+	TArray<FProcMeshTangent> tangents;
+	tangents.Add(FProcMeshTangent(0, 1, 0));
+	tangents.Add(FProcMeshTangent(0, 1, 0));
+	tangents.Add(FProcMeshTangent(0, 1, 0));
+	tangents.Add(FProcMeshTangent(0, 1, 0));
+
+	TArray<FLinearColor> vertexColors;
+	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
+	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
+	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
+	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
+
+	mesh->CreateMeshSection_LinearColor(index, vertices, Triangles, normals, UV0, vertexColors, tangents, true);
+	mesh->ContainsPhysicsTriMeshData(true);
+}
+
+void GetBoxVertices(TArray<FVector>& vertices, int l, int h, FVector centre)
+{
+	//FVector centre(100, 100, 100);
+	FTransform T(FRotator(0), FVector(centre.X/2, centre.Y/2, centre.Z/2), FVector(1, 1, 1));
+
+	vertices.Add(T.TransformPosition(FVector (l, 0, 0)));
+	vertices.Add(T.TransformPosition(FVector (0, 0, 0)));
+	vertices.Add(T.TransformPosition(FVector (0, 0, h)));
+	vertices.Add(T.TransformPosition(FVector (l, 0, h)));
+	vertices.Add(T.TransformPosition(FVector (0, l, 0)));
+	vertices.Add(T.TransformPosition(FVector (l, l, 0)));
+	vertices.Add(T.TransformPosition(FVector (0, l, h)));
+	vertices.Add(T.TransformPosition(FVector (l, l, h)));
+}
+
+void CreateBox(TArray<FVector>& vertices, UProceduralMeshComponent*& mesh, int& index)
+{
+	FVector a, b, c, d, e, f, g, i;
+	a = vertices[0];
+	b = vertices[1];
+	c = vertices[2];
+	d = vertices[3];
+	e = vertices[4];
+	f = vertices[5];
+	g = vertices[6];
+	i = vertices[7];
+
+	/*
+	int size = 100;
+	//faccia davanti
+	TArray<FVector> vert;
+	GetSquareVertices(vert, FVector(0, 0, 0), FTransform(FRotator(0, 0, 0), FVector(0, 0, 0), FVector(1, 1, 1)), size);
+	CreateSquare(vert, mesh, 0);
+	vert.Empty();
+
+	//faccia di sotto
+	GetSquareVertices(vert, FVector(0, 0, 0), FTransform(FRotator(90, 0, 90), FVector(0, 0, 0), FVector(1, 1, 1)), size);
+	CreateSquare(vert, mesh, 1);
+	vert.Empty();
+	
+	GetSquareVertices(vert, FVector(0, 0, 0), FTransform(FRotator(0, 90, 0), FVector(0, 0, 0), FVector(1, 1, 1)), size);
+	CreateSquare(vert, mesh, 2);
+	vert.Empty();
+	*/
+
+	
+	TArray<FVector> vert;
+
+	vert.Add(a);
+	vert.Add(b);
+	vert.Add(d);
+	vert.Add(c);
+	CreateSquare(vert, mesh, index);
+	vert.Empty();
+
+	//FTransform T(rotator, FVector(0, 0, 0), FVector(1, 1, 1));
+
+	vert.Add(f);
+	vert.Add(a);
+	vert.Add(i);
+	vert.Add(d);
+	CreateSquare(vert, mesh, ++index);
+	vert.Empty();
+
+	vert.Add(d);
+	vert.Add(c);
+	vert.Add(i);
+	vert.Add(g);
+	CreateSquare(vert, mesh, ++index);
+	vert.Empty();
+
+	vert.Add(b);
+	vert.Add(e);
+	vert.Add(c);
+	vert.Add(g);
+	CreateSquare(vert, mesh, ++index);
+	vert.Empty();
+
+	vert.Add(e);
+	vert.Add(f);
+	vert.Add(g);
+	vert.Add(i);
+	CreateSquare(vert, mesh, ++index);
+	vert.Empty();
+
+	vert.Add(b);
+	vert.Add(a);
+	vert.Add(e);
+	vert.Add(f);
+	CreateSquare(vert, mesh, ++index);
+	vert.Empty();
+}
+
+void CreateCilinder(const int radius, const int heigth, UProceduralMeshComponent*& mesh, FVector centre, int& index)
+{
+	TArray<FVector> BottomVertices;
+	TArray<FVector> TopVertices, aux;
+	//TArray<FVector> Svertices;
+
+	FTransform T(FRotator(0), FVector(centre.X / 2, centre.Y / 2, centre.Z / 2), FVector(1, 1, 1));
+
+	int r = radius;
 	float angle = T_PI / stepAroundCircle;
 
-	if (direction == 0) {
-		for (int i = 0; i < stepAroundCircle; i++)
-		{
-			vertices.Add(T.TransformVector(FVector(centre.X, centre.Y, centre.Z + heigth)));
-			vertices.Add(T.TransformVector(FVector(centre.X+(r * cos(angle * (i))), centre.Y+(r * sin(angle * (i))), centre.Z + heigth)));
-			vertices.Add(T.TransformVector(FVector(centre.X + (r * cos(angle * (i + 1))), centre.Y+(r * sin(angle * (i + 1))), centre.Z + heigth)));
-		}
+	GetCircleVertices(radius, 0, aux, FVector(0, 0, 0), FTransform());
+	for (auto v : aux) {
+		BottomVertices.Add(T.TransformPosition(v));
 	}
-	else {
-		for (int i = 0; i < stepAroundCircle; i++)
-		{
-			vertices.Add(T.TransformVector(FVector(centre.X, centre.Y, centre.Z)));
-			vertices.Add(T.TransformVector(FVector(centre.X, centre.Y+(r * cos(angle * (i))), centre.Z+(r * sin(angle * (i))))));
-			vertices.Add(T.TransformVector(FVector(centre.X, centre.Y+(r * cos(angle * (i + 1))), centre.Z + (r * sin(angle * (i + 1))))));
-		}
+	aux.Empty();
+	GetCircleVertices(radius, heigth, aux, FVector(0, 0, 0), FTransform());
+	for (auto v : aux) {
+		TopVertices.Add(T.TransformPosition(v));
 	}
 	
-}
 
+	int j;
+	for (int i = 1; i < stepAroundCircle * 3; i++) {
+		j = i + 1;
+		//if (j%3 == 0) j += 1;
+		if (j >= stepAroundCircle * 3) {
+			j = 1;
+		}
+		TArray<FVector> SupVertices;
+		SupVertices.Add(TopVertices[i]);
+		SupVertices.Add(TopVertices[j]);
+		SupVertices.Add(BottomVertices[i]);
+		SupVertices.Add(BottomVertices[j]);
+		CreateSquare(SupVertices, mesh, index+=i);
+		//i = j;
+	}
 
-// Called when the game starts or when spawned
-void AMyActor::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
+	TArray<int32> TopTriangles;
+	for (int i = (stepAroundCircle * 3) - 1; i >= 0; i--)
+	{
+		TopTriangles.Add(i);
+	}
 
-// Called every frame
-void AMyActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+	TArray<int32> BottomTriangles;
+	for (int i = 0; i < stepAroundCircle * 3; i++)
+	{
+		BottomTriangles.Add(i);
+	}
 
+	TArray<FVector> normals;
+	normals.Add(FVector(1, 0, 0));
+	normals.Add(FVector(1, 0, 0));
+	normals.Add(FVector(1, 0, 0));
+	normals.Add(FVector(1, 0, 0));
+
+	TArray<FVector2D> UV0;
+	UV0.Add(FVector2D(0, 0));
+	UV0.Add(FVector2D(10, 0));
+	UV0.Add(FVector2D(0, 10));
+	UV0.Add(FVector2D(10, 10));
+
+	TArray<FProcMeshTangent> tangents;
+	tangents.Add(FProcMeshTangent(0, 1, 0));
+	tangents.Add(FProcMeshTangent(0, 1, 0));
+	tangents.Add(FProcMeshTangent(0, 1, 0));
+	tangents.Add(FProcMeshTangent(0, 1, 0));
+
+	TArray<FLinearColor> vertexColors;
+	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
+	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
+	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
+	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
+
+	mesh->CreateMeshSection_LinearColor(index, TopVertices, TopTriangles, normals, UV0, vertexColors, tangents, true);
+	mesh->CreateMeshSection_LinearColor(++index, BottomVertices, BottomTriangles, normals, UV0, vertexColors, tangents, true);
+	// Enable collision data
+	mesh->ContainsPhysicsTriMeshData(true);
 }
 

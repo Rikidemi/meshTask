@@ -1,34 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
-#include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "ProceduralMeshComponent.h"
+#include "GameFramework/Actor.h"
 #define T_PI 6.28318530718
-#include "MyActor.generated.h"
+#define stepAroundCircle 8
 
-
-UCLASS()
-class PROCEDURALMESH_API AMyActor : public AActor
-{
-	GENERATED_BODY()
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	void CreateSquare(TArray<FVector> vertices, int index);
-	void GetCircleVertices(const int radius, const int heigth, TArray<FVector>& vertices, FVector centre, int direction, FRotator rotator);
-
-	UPROPERTY(VisibleAnywhere)
-	UProceduralMeshComponent* mesh;
-
-	const int stepAroundCircle = 8;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int size = 100;
-	
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-};
+//void CreateTriang(TArray<FVector>& vertices, FVector centre, FTransform T, const int size);
+void GetSquareVertices(TArray<FVector>& vertices, FVector centre, FTransform T,const int size);
+void CreateSquare(TArray<FVector>& vertices, UProceduralMeshComponent*& mesh,const int index);
+void GetCircleVertices(const int radius, const int heigth, TArray<FVector>& vertices, FVector centre, FTransform T);
+void CreateCircle(TArray<FVector> vertices, UProceduralMeshComponent*& mesh, int& index);
+void GetBoxVertices(TArray<FVector>& vertices, int length, int heigth, FVector centre);
+void CreateBox(TArray<FVector>& vertices, UProceduralMeshComponent*& mesh, int& index);
+void CreateCilinder(const int radius, const int heigth, UProceduralMeshComponent*& mesh, FVector centre, int& index);

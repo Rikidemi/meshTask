@@ -5,7 +5,7 @@
 
 ATriang::ATriang()
 {
-	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("GeneratedMesh"));
+	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("TriangleMesh"));
 	RootComponent = mesh;
 	mesh->bUseAsyncCooking = true;
 }

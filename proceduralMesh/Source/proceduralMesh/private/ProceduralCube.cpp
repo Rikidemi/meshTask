@@ -6,7 +6,7 @@
 // Sets default values
 ACube::ACube()
 {
-	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("GeneratedMesh"));
+	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("CubeMesh"));
 	RootComponent = mesh;
 	mesh->bUseAsyncCooking = true;
 }
@@ -16,78 +16,29 @@ ACube::ACube()
 
 void ACube::PostActorCreated()
 {
+	int index;
 	Super::PostActorCreated();
-	CreateCube();
+	vertices.Empty();
+	GetBoxVertices(vertices, size, heigth, FVector(0, 0, 0));
+	CreateBox(vertices, mesh, index);
 }
 
 void ACube::PostLoad()
 {
+	int index;
 	Super::PostLoad();
-	CreateCube();
+	vertices.Empty();
+	GetBoxVertices(vertices, size, heigth, FVector(0,0,0));
+	CreateBox(vertices, mesh,index);
 }
 
 void ACube::OnConstruction(const FTransform& Transform)
 {
+	int index;
 	Super::OnConstruction(Transform);
-	CreateCube();
-}
-
-void ACube::CreateCube()
-{
-	int l = size;
-	TArray<FVector> vert;
-
-	FVector a(l, 0, 0);
-	FVector b(0, 0, 0);
-	FVector c(0, 0, l);
-	FVector d(l, 0, l);
-	FVector e(0, l, 0);
-	FVector f(l, l, 0);
-	FVector g(0, l, l);
-	FVector h(l, l, l);
-	
-	vert.Add(a);
-	vert.Add(b);
-	vert.Add(d);
-	vert.Add(c);
-	CreateSquare(vert,0);
-	vert.Empty();
-	
-	vert.Add(f);
-	vert.Add(a);
-	vert.Add(h);
-	vert.Add(d);
-	CreateSquare(vert,1);
-	vert.Empty();
-	
-	vert.Add(d);
-	vert.Add(c);
-	vert.Add(h);
-	vert.Add(g);
-	CreateSquare(vert,2);
-	vert.Empty();
-	
-	vert.Add(b);
-	vert.Add(e);
-	vert.Add(c);
-	vert.Add(g);
-	CreateSquare(vert,3);
-	vert.Empty();
-
-	vert.Add(e);
-	vert.Add(f);
-	vert.Add(g);
-	vert.Add(h);
-	CreateSquare(vert,4);
-	vert.Empty();
-	
-	vert.Add(b);
-	vert.Add(a);
-	vert.Add(e);
-	vert.Add(f);
-	CreateSquare(vert,5);
-	vert.Empty();
-	
+	vertices.Empty();
+	GetBoxVertices(vertices, size, heigth, FVector(0, 0, 0));
+	CreateBox(vertices, mesh,index);
 }
 
 void ACube::BeginPlay()

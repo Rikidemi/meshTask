@@ -8,7 +8,7 @@
 #include "Cilinder.generated.h"
 
 UCLASS()
-class ACilinder : public AMyActor
+class PROCEDURALMESH_API ACilinder : public AActor
 {
 	GENERATED_BODY()
 	
@@ -18,16 +18,19 @@ public:
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	void PostActorCreated() override;
-	void PostLoad() override;
+	virtual void BeginPlay() ;
+	void PostActorCreated() ;
+	void PostLoad() ;
 	void OnConstruction(const FTransform& Transform);
-	void CreateCilinder(const int index);
 
+	UPROPERTY(VisibleAnywhere)
+	UProceduralMeshComponent* mesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int size = 100;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int heigth = 100;
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaTime) ;
 
 };

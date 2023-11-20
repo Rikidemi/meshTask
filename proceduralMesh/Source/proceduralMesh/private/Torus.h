@@ -8,7 +8,7 @@
 #include "Torus.generated.h"
 
 UCLASS()
-class ATorus : public AMyActor
+class PROCEDURALMESH_API ATorus : public AActor
 {
 	GENERATED_BODY()
 	
@@ -18,15 +18,19 @@ public:
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	void PostActorCreated() override;
-	void PostLoad() override;
+	virtual void BeginPlay();
+	void PostActorCreated();
+	void PostLoad();
 	void OnConstruction(const FTransform& Transform);
 
 	void CreateTorus(const int index);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int size = 100;
+	UPROPERTY(VisibleAnywhere)
+	UProceduralMeshComponent* mesh;
 
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaTime) ;
 
 };
