@@ -38,21 +38,23 @@ void ATorus::CreateTorus(const int index)
 
 	TArray<FVector> CleanVertices;
 	GetCircleVertices(radius, 0, MidVertices, FVector(0, 0, 0),FTransform());
+	for (FVector v : MidVertices) {
+		if (v != MidVertices[0]) CleanVertices.AddUnique(v);
+	}
 	
 	for (int i = 0; i < stepAroundCircle; i++) {
 		TArray<FVector> AuxVertices;
 		float angle = 360 / stepAroundCircle;
-		//to be fixed FRotator(0, i * angle, 0)
 		
-		GetCircleVertices(radius - ((radius*10)/100), 100, AuxVertices, MidVertices[2], FTransform(FRotator(90, i * angle, 0),FVector(0,0,0), FVector(1,1,1)));
+		GetCircleVertices(radius - ((radius*10)/100), 100, AuxVertices, CleanVertices[2], FTransform(FRotator(90, i * angle, 0), FVector(0, 0, 0), FVector(1, 1, 1)));
 		
 		TArray<FVector> CleanVerticesAux;
 		for (FVector v : AuxVertices) {
-			if (!CleanVertices.Contains(v)) {
+			if (v != AuxVertices[0]) {
 				CleanVerticesAux.AddUnique(v);
 			}
 		}
-		TorusVertices.Add(AuxVertices);
+		TorusVertices.Add(CleanVerticesAux);
 	}
 	
 	
@@ -62,9 +64,9 @@ void ATorus::CreateTorus(const int index)
 		if (y >= stepAroundCircle) {
 			y = 0;
 		}
-		for (int i = 0;i<stepAroundCircle*3; i++) {
+		for (int i = 0;i<stepAroundCircle+1; i++) {
 			j = i + 1;
-			if (j>=stepAroundCircle*3) {
+			if (j>=stepAroundCircle+1) {
 				j = 0;
 			}
 			TArray<FVector> SupVertices;

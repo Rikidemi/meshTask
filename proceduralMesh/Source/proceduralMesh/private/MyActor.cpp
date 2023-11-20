@@ -203,8 +203,8 @@ void CreateBox(TArray<FVector>& vertices, UProceduralMeshComponent*& mesh, int& 
 
 void CreateCilinder(const int radius, const int heigth, UProceduralMeshComponent*& mesh, FVector centre, int& index)
 {
-	TArray<FVector> BottomVertices;
-	TArray<FVector> TopVertices, aux;
+	TArray<FVector> BottomVertices, BottomPerimeter;
+	TArray<FVector> TopVertices, aux, TopPerimeter;
 	//TArray<FVector> Svertices;
 
 	FTransform T(FRotator(0), FVector(centre.X / 2, centre.Y / 2, centre.Z / 2), FVector(1, 1, 1));
@@ -215,26 +215,28 @@ void CreateCilinder(const int radius, const int heigth, UProceduralMeshComponent
 	GetCircleVertices(radius, 0, aux, FVector(0, 0, 0), FTransform());
 	for (auto v : aux) {
 		BottomVertices.Add(T.TransformPosition(v));
+		if (v != aux[0]) BottomPerimeter.AddUnique(T.TransformPosition(v));
 	}
 	aux.Empty();
 	GetCircleVertices(radius, heigth, aux, FVector(0, 0, 0), FTransform());
 	for (auto v : aux) {
 		TopVertices.Add(T.TransformPosition(v));
+		if (v != aux[0]) TopPerimeter.AddUnique(T.TransformPosition(v));
 	}
 	
 
 	int j;
-	for (int i = 1; i < stepAroundCircle * 3; i++) {
+	for (int i = 0; i < stepAroundCircle+1; i++) {
 		j = i + 1;
 		//if (j%3 == 0) j += 1;
-		if (j >= stepAroundCircle * 3) {
-			j = 1;
+		if (j >= stepAroundCircle) {
+			j = 0;
 		}
 		TArray<FVector> SupVertices;
-		SupVertices.Add(TopVertices[i]);
-		SupVertices.Add(TopVertices[j]);
-		SupVertices.Add(BottomVertices[i]);
-		SupVertices.Add(BottomVertices[j]);
+		SupVertices.Add(TopPerimeter[i]);
+		SupVertices.Add(TopPerimeter[j]);
+		SupVertices.Add(BottomPerimeter[i]);
+		SupVertices.Add(BottomPerimeter[j]);
 		CreateSquare(SupVertices, mesh, index+=i);
 		//i = j;
 	}
