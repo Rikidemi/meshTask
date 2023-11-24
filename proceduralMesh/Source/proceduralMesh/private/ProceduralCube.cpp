@@ -16,28 +16,28 @@ ACube::ACube()
 
 void ACube::PostActorCreated()
 {
-	int index;
+	int index = 0;
 	Super::PostActorCreated();
 	vertices.Empty();
-	GetBoxVertices(vertices, size, heigth, FVector(0, 0, 0));
+	GetBoxVertices(vertices, size, heigth, width, FVector(0, 0, 0));
 	CreateBox(vertices, mesh, index);
 }
 
 void ACube::PostLoad()
 {
-	int index;
+	int index = 0;
 	Super::PostLoad();
 	vertices.Empty();
-	GetBoxVertices(vertices, size, heigth, FVector(0,0,0));
+	GetBoxVertices(vertices, size, heigth,width, FVector(0,0,0));
 	CreateBox(vertices, mesh,index);
 }
 
 void ACube::OnConstruction(const FTransform& Transform)
 {
-	int index;
+	int index = 0;
 	Super::OnConstruction(Transform);
 	vertices.Empty();
-	GetBoxVertices(vertices, size, heigth, FVector(0, 0, 0));
+	GetBoxVertices(vertices, size, heigth, width,FVector(0, 0, 0));
 	CreateBox(vertices, mesh,index);
 }
 

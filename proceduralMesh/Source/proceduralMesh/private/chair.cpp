@@ -42,14 +42,14 @@ void Achair::CreateChair()
 	int border = (size * 20) / 100;
 	int legLength = (size * 3 / 4) * 2;
 
-	GetBoxVertices(vertices, size, border, FVector(0, 0, legLength));
+	GetBoxVertices(vertices, size, border, width, FVector(0, 0, legLength));
 	CreateBox(vertices, mesh, index);
 	
 	
 	TArray<FVector> backVertices, auxVert;
 
 	//GetBoxVertices(aux, size, border, FVector(500,500,500));
-	GetBoxVertices(backVertices, size, border, FVector(legLength, 0, 0));
+	GetBoxVertices(backVertices, size+50, border, width, FVector(legLength, 0, 0));
 	FTransform T(FRotator(90,0,0), FVector(0, 0, 0), FVector(1, 1, 1));
 	for (auto v : backVertices) {
 		auxVert.Add(T.TransformVector(v));
@@ -66,6 +66,8 @@ void Achair::CreateChair()
 
 	F.SetTranslation(FVector(0, (size * 2) - 2 * border, 0));
 	CreateCilinder(border / 2, legLength / 2, mesh, F.TransformPosition(FVector(0, border, 0)), ++index);
+
+	
 
 	}
 

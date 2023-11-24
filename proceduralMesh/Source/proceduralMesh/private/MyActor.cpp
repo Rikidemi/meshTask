@@ -7,19 +7,13 @@
 void GetSquareVertices(TArray<FVector>& vertices,FVector centre , FTransform T, int size)
 {
 	vertices.Empty();
-	/*
-	//FTransform T(rotator, FVector(0, 0, 0), FVector(1, 1, 1));
-	vertices.Add(T.TransformVector(centre));
-	vertices.Add(T.TransformVector(FVector(centre.X, centre.Y + size, centre.Z)));
-	vertices.Add(T.TransformVector(FVector(centre.X, centre.Y, centre.Z+size)));
-	vertices.Add(T.TransformVector(FVector(0, centre.Y+size, centre.Z+size)));
-	*/
 
-	vertices.Add(T.TransformVector(FVector(centre.X + size, 0, centre.Z - size)));
-	vertices.Add(T.TransformVector(FVector(centre.X - size, 0, centre.Z - size)));
+	int halfSize = size / 2;
+	vertices.Add(T.TransformVector(FVector(centre.X + halfSize, 0, centre.Z - halfSize)));
+	vertices.Add(T.TransformVector(FVector(centre.X - halfSize, 0, centre.Z - halfSize)));
 	
-	vertices.Add(T.TransformVector(FVector(centre.X + size, 0, centre.Z + size)));
-	vertices.Add(T.TransformVector(FVector(centre.X - size, 0, centre.Z + size)));
+	vertices.Add(T.TransformVector(FVector(centre.X + halfSize, 0, centre.Z + halfSize)));
+	vertices.Add(T.TransformVector(FVector(centre.X - halfSize, 0, centre.Z + halfSize)));
 }
 
 void CreateSquare(TArray<FVector>& vertices, UProceduralMeshComponent*& mesh, int index) {
@@ -107,7 +101,7 @@ void CreateCircle(TArray<FVector> vertices, UProceduralMeshComponent*& mesh, int
 	mesh->ContainsPhysicsTriMeshData(true);
 }
 
-void GetBoxVertices(TArray<FVector>& vertices, int l, int h, FVector centre)
+void GetBoxVertices(TArray<FVector>& vertices, int l, int h, int w, FVector centre)
 {
 	vertices.Empty();
 	//FVector centre(100, 100, 100);
@@ -117,10 +111,10 @@ void GetBoxVertices(TArray<FVector>& vertices, int l, int h, FVector centre)
 	vertices.Add(T.TransformPosition(FVector (0, 0, 0)));
 	vertices.Add(T.TransformPosition(FVector (0, 0, h)));
 	vertices.Add(T.TransformPosition(FVector (l, 0, h)));
-	vertices.Add(T.TransformPosition(FVector (0, l, 0)));
-	vertices.Add(T.TransformPosition(FVector (l, l, 0)));
-	vertices.Add(T.TransformPosition(FVector (0, l, h)));
-	vertices.Add(T.TransformPosition(FVector (l, l, h)));
+	vertices.Add(T.TransformPosition(FVector (0, w, 0)));
+	vertices.Add(T.TransformPosition(FVector (l, w, 0)));
+	vertices.Add(T.TransformPosition(FVector (0, w, h)));
+	vertices.Add(T.TransformPosition(FVector (l, w, h)));
 }
 
 void CreateBox(TArray<FVector>& vertices, UProceduralMeshComponent*& mesh, int& index)
@@ -134,24 +128,6 @@ void CreateBox(TArray<FVector>& vertices, UProceduralMeshComponent*& mesh, int& 
 	f = vertices[5];
 	g = vertices[6];
 	i = vertices[7];
-
-	/*
-	int size = 100;
-	//faccia davanti
-	TArray<FVector> vert;
-	GetSquareVertices(vert, FVector(0, 0, 0), FTransform(FRotator(0, 0, 0), FVector(0, 0, 0), FVector(1, 1, 1)), size);
-	CreateSquare(vert, mesh, 0);
-	vert.Empty();
-
-	//faccia di sotto
-	GetSquareVertices(vert, FVector(0, 0, 0), FTransform(FRotator(90, 0, 90), FVector(0, 0, 0), FVector(1, 1, 1)), size);
-	CreateSquare(vert, mesh, 1);
-	vert.Empty();
-	
-	GetSquareVertices(vert, FVector(0, 0, 0), FTransform(FRotator(0, 90, 0), FVector(0, 0, 0), FVector(1, 1, 1)), size);
-	CreateSquare(vert, mesh, 2);
-	vert.Empty();
-	*/
 
 	
 	TArray<FVector> vert;

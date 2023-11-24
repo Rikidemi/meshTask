@@ -32,6 +32,8 @@ protected:
 	UProceduralMeshComponent* mesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int size = 200;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int width = 400;
 
 public:	
 	// Called every frame

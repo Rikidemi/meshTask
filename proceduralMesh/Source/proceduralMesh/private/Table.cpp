@@ -6,7 +6,7 @@
 // Sets default values
 ATable::ATable()
 {
-	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("ChairMesh"));
+	mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("TableMesh"));
 	RootComponent = mesh;
 	mesh->bUseAsyncCooking = true;
 }
@@ -41,7 +41,7 @@ void ATable::CreateTable()
 	int border = (size * 20) / 100;
 	int legLength = (size * 3 / 4) * 2;
 
-	GetBoxVertices(vertices, size, border, FVector(0, 0, legLength));
+	GetBoxVertices(vertices, size, border, width, FVector(0, 0, legLength));
 	CreateBox(vertices, mesh, index);
 
 	TArray<FVector> backVertices, auxVert;
@@ -51,10 +51,10 @@ void ATable::CreateTable()
 	FTransform F(FVector((size * 2) - border, 0, 0));
 	CreateCilinder(border / 2, legLength / 2, mesh, F.TransformPosition(FVector(0, border, 0)), ++index);
 
-	F.SetTranslation(FVector((size * 2) - border, (size * 2) - 2 * border, 0));
+	F.SetTranslation(FVector((size * 2) - border, width * 2 - 2 * border, 0));
 	CreateCilinder(border / 2, legLength / 2, mesh, F.TransformPosition(FVector(0, border, 0)), ++index);
 
-	F.SetTranslation(FVector(border, (size * 2) - 2 * border, 0));
+	F.SetTranslation(FVector(border, width * 2  -  2 * border, 0));
 	CreateCilinder(border / 2, legLength / 2, mesh, F.TransformPosition(FVector(0, border, 0)), ++index);
 
 }

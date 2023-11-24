@@ -35,7 +35,6 @@ void ACilinder::OnConstruction(const FTransform& Transform)
 void ACilinder::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame

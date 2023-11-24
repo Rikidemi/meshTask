@@ -32,6 +32,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int size = 100;
+	int width = 100;
+	
 
 public:	
 	// Called every frame
