@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 #define T_PI 6.28318530718
 #define stepAroundCircle 8
+#define chairSize 100
 
 //void CreateTriang(TArray<FVector>& vertices, FVector centre, FTransform T, const int size);
 //square

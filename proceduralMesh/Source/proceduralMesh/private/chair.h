@@ -30,8 +30,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UProceduralMeshComponent* mesh;
 
+	/*
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int size = 100;
+	int size = 100;*/
 	int width = 100;
 	
 

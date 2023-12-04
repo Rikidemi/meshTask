@@ -16,6 +16,7 @@ private:
 
 	TArray<FVector> vertices;
 	
+	
 public:	
 	// Sets default values for this actor's properties
 	ATable();
@@ -25,6 +26,7 @@ protected:
 	virtual void BeginPlay() override;
 	void PostActorCreated();
 	void PostLoad();
+
 	void OnConstruction(const FTransform& Transform);
 	void CreateTable();
 
@@ -34,6 +36,8 @@ protected:
 	int size = 200;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int width = 400;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UStaticMesh* Chairs;
 
 public:	
 	// Called every frame

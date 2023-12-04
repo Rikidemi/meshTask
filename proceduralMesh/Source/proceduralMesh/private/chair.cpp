@@ -38,6 +38,7 @@ void Achair::OnConstruction(const FTransform& Transform)
 
 void Achair::CreateChair()
 {
+	int size = chairSize;
 	int index = 0;
 	int border = (size * 20) / 100;
 	int legLength = (size * 3 / 4) * 2;
