@@ -36,9 +36,7 @@ protected:
 	int size = 200;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int width = 400;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMesh* Chairs;
-
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

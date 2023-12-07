@@ -40,6 +40,7 @@ void ATable::CreateTable()
 	int index = 0;
 	int border = (size * 20) / 100;
 	int legLength = (size * 3 / 4) * 2;
+	mesh->ClearAllMeshSections();
 
 	GetBoxVertices(vertices, size, border, width, FVector(0, 0, legLength));
 	CreateBox(vertices, mesh, index);

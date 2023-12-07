@@ -32,7 +32,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int heigth = 100;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int width = 200;
+	int width = 100;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) ;

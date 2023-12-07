@@ -104,7 +104,6 @@ void CreateCircle(TArray<FVector> vertices, UProceduralMeshComponent*& mesh, int
 void GetBoxVertices(TArray<FVector>& vertices, int l, int h, int w, FVector centre)
 {
 	vertices.Empty();
-	//FVector centre(100, 100, 100);
 	FTransform T(FRotator(0), FVector(centre.X/2, centre.Y/2, centre.Z/2), FVector(1, 1, 1));
 
 	vertices.Add(T.TransformPosition(FVector (l, 0, 0)));
@@ -138,8 +137,6 @@ void CreateBox(TArray<FVector>& vertices, UProceduralMeshComponent*& mesh, int& 
 	vert.Add(c);
 	CreateSquare(vert, mesh, index);
 	vert.Empty();
-
-	//FTransform T(rotator, FVector(0, 0, 0), FVector(1, 1, 1));
 
 	vert.Add(f);
 	vert.Add(a);
@@ -181,7 +178,6 @@ void CreateCilinder(const int radius, const int heigth, UProceduralMeshComponent
 {
 	TArray<FVector> BottomVertices, BottomPerimeter;
 	TArray<FVector> TopVertices, aux, TopPerimeter;
-	//TArray<FVector> Svertices;
 
 	FTransform T(FRotator(0), FVector(centre.X / 2, centre.Y / 2, centre.Z / 2), FVector(1, 1, 1));
 
@@ -204,7 +200,6 @@ void CreateCilinder(const int radius, const int heigth, UProceduralMeshComponent
 	int j;
 	for (int i = 0; i < stepAroundCircle+1; i++) {
 		j = i + 1;
-		//if (j%3 == 0) j += 1;
 		if (j >= stepAroundCircle) {
 			j = 0;
 		}
@@ -213,8 +208,7 @@ void CreateCilinder(const int radius, const int heigth, UProceduralMeshComponent
 		SupVertices.Add(TopPerimeter[j]);
 		SupVertices.Add(BottomPerimeter[i]);
 		SupVertices.Add(BottomPerimeter[j]);
-		CreateSquare(SupVertices, mesh, index+=i);
-		//i = j;
+		CreateSquare(SupVertices, mesh, index++);
 	}
 
 	TArray<int32> TopTriangles;
@@ -253,8 +247,8 @@ void CreateCilinder(const int radius, const int heigth, UProceduralMeshComponent
 	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
 	vertexColors.Add(FLinearColor(0.75, 0.75, 0.75, 1.0));
 
-	mesh->CreateMeshSection_LinearColor(index, TopVertices, TopTriangles, normals, UV0, vertexColors, tangents, true);
-	mesh->CreateMeshSection_LinearColor(++index, BottomVertices, BottomTriangles, normals, UV0, vertexColors, tangents, true);
+	mesh->CreateMeshSection_LinearColor(index++, TopVertices, TopTriangles, normals, UV0, vertexColors, tangents, true);
+	mesh->CreateMeshSection_LinearColor(index++, BottomVertices, BottomTriangles, normals, UV0, vertexColors, tangents, true);
 	// Enable collision data
 	mesh->ContainsPhysicsTriMeshData(true);
 }
